@@ -2,10 +2,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import useFetch from '../hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '../redux/Product/ProductSlice';
 
 const Products = () => {
   const navigate = useNavigate();
   const [loading, error, data] = useFetch('https://fakestoreapi.com/products');
+  // const count = useSelector((state) => state.Product.value)
+  const dispatch = useDispatch()
 
   if (loading) {
     return (
@@ -25,7 +29,7 @@ const Products = () => {
 
   return (
     <div className="min-h-screen bg-white py-16 px-6">
-      <h2 className="text-4xl font-bold text-center mb-12">Our Exclusive Products</h2>
+      <h2 className="text-4xl font-bold text-center mb-12 text-black">Our Exclusive Products</h2>
       <div className="flex justify-center flex-wrap gap-10">
         {data.map((item, index) => (
           <motion.div
@@ -37,7 +41,7 @@ const Products = () => {
             className="bg-white border rounded-2xl shadow-lg p-4 w-64 text-center transition-all duration-300 hover:shadow-2xl flex flex-col justify-between"
           >
             <div>
-              <h2 className="font-semibold text-lg mb-2">
+              <h2 className="font-semibold text-lg mb-2 text-black">
                 {item.title.split(' ').slice(0, 3).join(' ')}
               </h2>
               <img
@@ -60,8 +64,16 @@ const Products = () => {
               >
                 See more
               </button>
-              <button className="bg-black text-white px-3 py-2 rounded-full font-semibold hover:bg-gray-800 transition w-1/2">
-                Add Cart
+              <button className="bg-black text-white px-3 py-2 rounded-full font-semibold hover:bg-gray-800 transition w-1/2"
+              onClick={() =>
+                dispatch(addToCart({
+                  id: item.id,
+                  title: item.title,
+                  image: item.image,
+                  price: item.price
+                }))
+              }>
+               Add Cart
               </button>
             </div>
           </motion.div>

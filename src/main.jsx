@@ -8,6 +8,7 @@ import About from './pages/About.jsx'
 import Products from './pages/Products.jsx'
 import SinglePro from './pages/Singlepro.jsx'
 import Contact from './pages/Contact.jsx'
+import Card from './pages/Card.jsx'
 import { store } from './redux/store.js'
 import { Provider } from 'react-redux'
 
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: 'Contact',
         element: <Contact/>
+      },
+      {
+        path: 'Card',
+        element: <Card/>
       }
     ]
   }
